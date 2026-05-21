@@ -32,13 +32,6 @@ If the user repeats the same preference across turns, do **not** drift toward ag
 
 For simple questions, answer directly — no forced option list.
 
-## Docker image platform
-
-Apple Silicon defaults to `linux/arm64`; most cloud runtimes are `linux/amd64`. Mismatched images fail with `exec format error` at runtime.
-
-- **Always specify `--platform`** when pulling or mirroring images.
-- Confirm target arch from EKS node group `instance_types`, ECS task `runtimePlatform`, Lambda `Architectures`, or registry / manifest-list policy. Ask if unclear.
-
 ## Risk classification (before editing)
 
 A change is **high-risk** if any of:

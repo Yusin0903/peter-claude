@@ -1,0 +1,8 @@
+# Editor / OS noise
+.DS_Store
+*.swp
+*~
+
+# Backups created by install.sh on target side (won't show up in repo
+# but listed for clarity in case anyone copies files in)
+*.bak.*

@@ -48,7 +48,11 @@ For high-risk work: **do not apply / deploy / merge / commit / ask the user to r
 
 Include the block below when the task involved file edits, command execution, or repo file reads beyond a single quick lookup. Pure Q&A and concept explanation omit it.
 
-Use literal tokens `PASS`, `FAIL`, `SKIP`, `NONE`, `YES`, `NO`, `N/A`.
+**Trivial edit exception**: A single note / markdown / TODO file edit with no executable content may replace the full report with one line: `Verification skipped: <reason>`. Anything touching code, config, infra, or multiple files uses the full report.
+
+**Evidence rule**: Each `Checks run` line must cite the **independent evidence** that backs the result, not just the tool that ran. A tool's success return code is **not** evidence by itself — Write returning OK only proves bytes hit disk, not that content is correct. If no independent evidence exists, the check goes under `Checks NOT run`, not `Checks run`.
+
+Format (one line per check): `<check>: <PASS|FAIL> — <independent evidence>`
 
 ```
 ## Verification Report
@@ -56,9 +60,9 @@ Use literal tokens `PASS`, `FAIL`, `SKIP`, `NONE`, `YES`, `NO`, `N/A`.
 - Risk tier: high | low
 - Separate-session review: YES | NO | N/A
 - Changed files: <paths> or NONE
-- Checks run: <check>: PASS|FAIL|SKIP (one line per check)
-- Checks NOT run: <reason> or NONE
+- Checks run: <check>: <PASS|FAIL> — <independent evidence>  (one line per check)
+- Checks NOT run: <check>: <reason> or NONE
 - Residual risk: <one line> or NONE
 ```
 
-Never silently omit checks. If you couldn't run one, list it under "Checks NOT run."
+Never silently omit checks. If you couldn't run one, list it under `Checks NOT run` with a reason.

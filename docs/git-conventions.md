@@ -10,22 +10,37 @@ Examples:
 
 ## PR Title
 
-`<type>: <JIRA-ID> <description>` or `<type>: [<JIRA-ID>] <description>`
+`<type>(<scope>): <JIRA-ID> <description>` — same format as commit subjects.
 
 Examples:
-- `feat: V1PC-805 Add user authentication`
-- `fix: [V1PC-805] Resolve login error`
+- `feat(auth): V1PC-805 add user authentication`
+- `fix(login): V1PC-805 resolve login error`
 
 ## Commit Messages
 
-Format: `<type>: <JIRA-ID> <description>`
+Format: `<type>(<scope>): <JIRA-ID> <description>`
+
+- `<type>` — the kind of change (see Allowed Types below).
+- `<scope>` — **optional**; the area the change touches: a module / component /
+  subsystem / environment name. Pick the one the reader cares about most.
+  Omit it (and its parentheses) when the change is broad or global. Multiple
+  scopes: comma-separated.
+- `<JIRA-ID>` — required, right after the colon.
+- `<description>` — imperative mood ("add", not "added"), lowercase start, no
+  trailing period.
+
+Examples:
+- `feat(thanos): AVATAR-9336 add central Thanos stack`
+- `fix(dns): AVATAR-9336 align regional cert with upstream`
+- `chore(deploy): AVATAR-9617 default the bool toggles to false`
+- `fix(au/eks): AVATAR-9642 add brownfield LT guards` (env/component scope)
+- `refactor: AVATAR-9617 migrate global-system from upstream` (no scope — broad change)
 
 Rules:
 - Imperative mood ("Add fix", not "Added fix")
-- Capitalize first word after JIRA ID, no trailing punctuation
-- Subject line <= 50 chars
+- JIRA ID required, immediately after the colon
+- Subject line <= 72 chars
 - Body (optional) describes "why"
-- JIRA ID at the beginning
 - Remove unused/commented code before committing
 
 ## Allowed Types

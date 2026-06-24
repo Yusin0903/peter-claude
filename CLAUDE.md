@@ -20,6 +20,19 @@ Default to **Traditional Chinese (zh-TW)** when the user writes Chinese, includi
 - Don't add comments, docstrings, or type annotations to code you didn't change. Modifying a signature or fixing a type error counts as "changed."
 - Don't revert user-modified files. If the worktree is dirty or on an unexpected branch, ask before overwriting.
 
+## Agent-Friendly Code & Comments
+
+Optimize for the next agent reading the code, not for human prose. The test for every comment, name, and doc line: **does it say something the code itself cannot, that prevents a plausible-but-wrong change?** If not, cut it.
+
+Keep only three kinds of comment:
+- **Footguns** — a value that breaks things if changed/mismatched where the breakage is non-obvious. State the consequence, not the mechanism (e.g. "name must stay `gp3` or every PVC goes Pending").
+- **Deliberate counter-intuitive choices** — when the code does the opposite of the obvious default, say *why* so an agent doesn't "fix" it back (e.g. "Retain, not Delete, so a recreate can't destroy data").
+- **Invisible cross-file links** — a dependency/contract that lives in another file and can't be seen here (e.g. "must match `thanos_region_label` in atl/").
+
+Cut: comments that restate the code; background/history/trivia not needed to safely change the line; long explanations where the conclusion alone suffices (keep the verdict, drop the essay).
+
+Prefer making the code legible over commenting it: names that state intent (a wrong assumption should look wrong), and tool-enforced constraints (`validation`/`precondition`/`depends_on`, schema, types) over a comment — an enforced rule can't drift out of date.
+
 ## Library / API answers
 
 For libraries, frameworks, SDKs, CLIs, or cloud services: **prefer MCP docs lookups over recall** (`context7`, `microsoft-docs-mcp`, `trendmicro-knowledge-mcp`). Training data may be stale. Don't fabricate file paths, function names, or flags — grep first.
